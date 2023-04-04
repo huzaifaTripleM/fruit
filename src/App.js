@@ -13,11 +13,9 @@ function App() {
 
 
   const client = new ApolloClient({
-    uri: "https://my-example-url.com", // Your running GraphQL server URL
+    uri: "https://fruits-api.netlify.app/graphql", // Your running GraphQL server URL
     cache: new InMemoryCache()
   });
-
-
 
 
   return (
