@@ -18,7 +18,7 @@ const AddFruit = ( ) => {
     const [climatic_zone, setClimaticZone] = useState('');
     const [addFruit, { data, loading, error }] = useMutation(addFruitMutation);
     const [updateFruit, { upDateFruit_data, updateFrloading }] = useMutation(updateFruitMutation);
-    const [deleteFruit, { deleteFruit_data, deleteFruit_loading }] = useMutation(updateFruitMutation);
+    const [deleteFruit, { deleteFruit_data, deleteFruit_loading }] = useMutation(deleteFruitMutation);
 
    
    
@@ -43,6 +43,7 @@ const AddFruit = ( ) => {
   };
 
   const handleUpdate = (event) => { 
+    event.preventDefault();
 console.log('here')
     updateFruit({
       variables: {
@@ -64,9 +65,8 @@ console.log('here')
 
     const handleDelete = (event) => {
 
-
+      event.preventDefault();
       deleteFruit({
-
         variables:{
           id:id,
         }
