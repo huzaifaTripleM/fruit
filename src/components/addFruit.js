@@ -16,9 +16,10 @@ const AddFruit = ( ) => {
     const [maturation_fruit, setMaturationFruit] = useState('');
     const [life_cycle, setLifeCycle] = useState('');
     const [climatic_zone, setClimaticZone] = useState('');
-    const [addFruit, { data, loading, error }] = useMutation(addFruitMutation);
+    const [addFruit] = useMutation(addFruitMutation);
     const [updateFruit, { upDateFruit_data, updateFrloading }] = useMutation(updateFruitMutation);
     const [deleteFruit, { deleteFruit_data, deleteFruit_loading }] = useMutation(deleteFruitMutation);
+    const {loading, data} = useQuery(Fruits)
 
    
    
@@ -77,18 +78,16 @@ console.log('here')
 
   
 
-    // const displayFruits = ( loading , data ) =>{
+    const displayFruits = ( loading , data ) =>{
 
-    //     if(loading)
-    //     return (<option disabled>Loading data ....</option>)
+        if(loading)
+        return (<option disabled>Loading data ....</option>)
     
-    //     else 
-    //     {       return data.map(_data =>{
-    //             return (<option key={_data.id}  value= {_data.id}>_data</option>)
-    //         })
-    //     }
+        else 
+        {     console.log('data', data)
+        }
     
-    // } 
+    } 
     return ( 
         <div>
     <form onSubmit={handleSubmit}>
@@ -201,7 +200,7 @@ console.log('here')
           <button type="button" onClick={handleUpdate}>Update</button>
           <button type="button" onClick={handleDelete}>Delete</button>
           {loading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
+          {displayFruits(loading,data)}
         </form>
 
 
