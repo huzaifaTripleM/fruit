@@ -17,10 +17,12 @@ const AddFruit = ( ) => {
     const [life_cycle, setLifeCycle] = useState('');
     const [climatic_zone, setClimaticZone] = useState('');
     const [addFruit] = useMutation(addFruitMutation);
-    const [updateFruit, { upDateFruit_data, updateFrloading }] = useMutation(updateFruitMutation);
-    const [deleteFruit, { deleteFruit_data, deleteFruit_loading }] = useMutation(deleteFruitMutation);
+    const [updateFruit] = useMutation(updateFruitMutation);
+    const [deleteFruit] = useMutation(deleteFruitMutation);
     const {loading, data} = useQuery(Fruits)
-  
+    const { isloading, error, hasData } = useQuery(Fruit, {
+      variables: {id:1},
+    });
 
    
    
@@ -83,19 +85,22 @@ const AddFruit = ( ) => {
         return (<option disabled>Loading data ....</option>)
     
         else 
-        {     console.log('data', data)
+        {     console.log('data',data)
         }
     
     } 
 
-    const displayFruit = (id) =>{
-
-      // const {fruitLoading , fruitdata} = useQuery(Fruit , {
-      //     variables:{
-      //       id
-      //     }
-      // })
+    const displayFruit = (load, data) => {
+      
+      if(load)
+      return (<option disabled>Loading data ....</option>)
+  
+      else 
+      {     
+        console.log('data2', data)
       }
+    };
+
     
     return ( 
         <div>
@@ -210,7 +215,7 @@ const AddFruit = ( ) => {
           <button type="button" onClick={handleDelete}>Delete</button>
           {loading && <p>Loading...</p>}
           {displayFruits(loading,data)}
-          {displayFruit(1)}
+          {displayFruit(isloading, hasData)}
         </form>
 
 
