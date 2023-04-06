@@ -20,6 +20,7 @@ const AddFruit = ( ) => {
     const [updateFruit, { upDateFruit_data, updateFrloading }] = useMutation(updateFruitMutation);
     const [deleteFruit, { deleteFruit_data, deleteFruit_loading }] = useMutation(deleteFruitMutation);
     const {loading, data} = useQuery(Fruits)
+  
 
    
    
@@ -45,7 +46,6 @@ const AddFruit = ( ) => {
 
   const handleUpdate = (event) => { 
     event.preventDefault();
-console.log('here')
     updateFruit({
       variables: {
         id: id,
@@ -64,14 +64,13 @@ console.log('here')
     });
   }
 
-    const handleDelete = (event) => {
+  const handleDelete = (event) => {
 
       event.preventDefault();
       deleteFruit({
         variables:{
           id:id,
         }
-
       })
 
     }
@@ -88,6 +87,16 @@ console.log('here')
         }
     
     } 
+
+    const displayFruit = (id) =>{
+
+      // const {fruitLoading , fruitdata} = useQuery(Fruit , {
+      //     variables:{
+      //       id
+      //     }
+      // })
+      }
+    
     return ( 
         <div>
     <form onSubmit={handleSubmit}>
@@ -201,6 +210,7 @@ console.log('here')
           <button type="button" onClick={handleDelete}>Delete</button>
           {loading && <p>Loading...</p>}
           {displayFruits(loading,data)}
+          {displayFruit(1)}
         </form>
 
 
