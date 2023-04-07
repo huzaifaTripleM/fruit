@@ -4,13 +4,14 @@ export const Fruits = gql`
   query GetFruits {
     fruits {
       id
+      scientific_name
     }
   }
 `;
 
 export const Fruit = gql`
-  query lksdjfkl {
-    fruit {
+  query fruit($id : ID) {
+    fruit (id:$id) {
       scientific_name
       tree_name
       fruit_name

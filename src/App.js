@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import AddFruit from './components/addFruit';
+import User from './components/user'
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,7 +14,7 @@ function App() {
 
 
   const client = new ApolloClient({
-    uri: "https://fruits-api.netlify.app/graphql", // Your running GraphQL server URL
+    uri: "https://merchapi-login-dev.azurewebsites.net/api/graphql", // Your running GraphQL server URL
     cache: new InMemoryCache()
   });
 
@@ -21,7 +22,7 @@ function App() {
   return (
 
     <ApolloProvider client = {client}>
-        <AddFruit/>
+        <User/>
     </ApolloProvider>
   );
 }
