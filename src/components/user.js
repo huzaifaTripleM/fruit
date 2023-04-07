@@ -109,7 +109,7 @@ const User = () => {
   return (
     <>
     <div className="container">
-      <div>
+      <div style={{margin:"50px"}}>
         <button className="button" onClick={handleDisplay}>
           <BsSearch className="icon" /> Get User
         </button>
@@ -121,7 +121,7 @@ const User = () => {
         )}
       </div>
 
-      <div>
+      <div style={{margin:"20px"}}>
         <label htmlFor="input-field">Enter text:</label>
         <div className="input-container">
           <input
@@ -138,8 +138,8 @@ const User = () => {
         <div className="user-container">
           {displayUser(loadingUser, dataUser)}
         </div>
-
-        <div>
+      </div>
+      <div style={{marginLeft:"80px"}}>
           <select
             value={selectedOption}
             onChange={handleSelectOption}
@@ -152,7 +152,6 @@ const User = () => {
             {displayUserByrole(userByRoleloading, userByRoleData)}
           </div>
         </div>
-      </div>
     </div>
   </>
   );
