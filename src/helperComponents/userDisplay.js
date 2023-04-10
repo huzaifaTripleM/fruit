@@ -10,9 +10,7 @@ const UserDisplay = ({Id , first_name , last_name , Email}) => {
     const [email , setEmail] = useState(Email)
 
 
-    useEffect(()=>{
-      console.log('user data' , id , firstName ,lastName, email)
-    })
+ 
 
 return ( 
     <div className="user-display">

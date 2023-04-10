@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , } from "react";
 import { useQuery} from "@apollo/client";
+import useDelayedState from "../lib/useDelayedHook";
 import { getUsers, getUser ,getUserByRoles   } from "../queries/userQuery";
 
 import { BsSearch } from "react-icons/bs";
@@ -8,11 +9,15 @@ import '../styles/button.css'
 
 const User = () => {
   const [value, setValue] = useState();
-  const [emailValue, setEmailValue] = useState("arslan.ahmad@merch.com");
+  const [counter , setCounter] = useState(0);
+  const [delayState, setDelayState] = useDelayedState(0, 1000);
+  const [emailValue, setEmailValue] = useState("anas.raza+1@merch.com");
+
    const [selectedOption, setSelectedOption] = useState('client');
   const { loading:loadingUsers, data:dataUsers } = useQuery(getUsers);
   const { loading:loadingUser, data:dataUser  } = useQuery(getUser, {
-    variables: { email: emailValue}
+    variables: { email: emailValue},
+
   });
   const {loading:userByRoleloading , data:userByRoleData} = useQuery(getUserByRoles ,{
     variables : {role:selectedOption}
@@ -23,11 +28,36 @@ const User = () => {
   };
 
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter + 1);
+    },800);
+    return () => clearInterval(interval);
+  }, []);
+
+
+
+
+ 
+useEffect(() => {
+  console.log('delayedCounter', delayState);
+},[delayState]);
+
+  useEffect(()=>{
+
+    if(counter >=1 && value !== "")
+      setEmailValue(value)    
+    else if(counter >=3 && value === "")
+    setEmailValue("anas.raza+1@merch.com")
+  })
+
+
 
   const [isDisplay, setIsDisplay] = useState(false);
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    setCounter(0)
   };
 
   const handleDisplay = () => {
@@ -35,7 +65,9 @@ const User = () => {
   };
 
   const handleSearch = (event) => {
-    setEmailValue(value);
+    // setDelayTime(5000)
+    // setDelayedValue('Testing2')
+    setDelayState ('Testing456' ,3000)
   };
 
   const displayUsers = (loading, data) => {
@@ -46,10 +78,10 @@ const User = () => {
           {data["getUsers"]?.map((_user) => {
             return (
               <UserDisplay
-                Id={_user._id}
-                first_name={_user.userInfo["firstName"]}
-                last_name={_user.userInfo["lastName"]}
-                Email={_user.userInfo["email"]}
+                Id={_user?._id}
+                first_name={_user?.userInfo["firstName"]}
+                last_name={_user?.userInfo["lastName"]}
+                Email={_user?.userInfo["email"]}
               />
             );
           })}
@@ -62,17 +94,16 @@ const User = () => {
   const displayUser = (loading, data) => {
     if (loading) return <div> Data is loading ... </div>;
     else {
-        console.log('data',data)
       return (
         <div>
-
+            {data !==undefined &&
               <UserDisplay
-                Id={data["getUser"]._id}
-                first_name={data["getUser"].userInfo["firstName"]}
-                last_name={data["getUser"].userInfo["lastName"]}
-                Email={data["getUser"].userInfo["email"]}
+                Id={data["getUser"]?._id}
+                first_name={data["getUser"]?.userInfo["firstName"]}
+                last_name={data["getUser"]?.userInfo["lastName"]}
+                Email={data["getUser"]?.userInfo["email"]}
               />
-         
+            }
        
         
         </div>
@@ -88,13 +119,13 @@ const User = () => {
         
         <div>
           {data["getUsersByRole"]?.map((_user) => {
-            console.log(_user);
+        
             return (
               <UserDisplay
                 Id={_user._id}
-                first_name={_user.userInfo["firstName"]}
-                last_name={_user.userInfo["lastName"]}
-                Email={_user.userInfo["email"]}
+                first_name={_user?.userInfo["firstName"]}
+                last_name={_user?.userInfo["lastName"]}
+                Email={_user?.userInfo["email"]}
               />
             );
           })}
