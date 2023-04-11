@@ -2,7 +2,7 @@ import React, { useEffect, useState , } from "react";
 import { useQuery} from "@apollo/client";
 import useDelayedState from "../lib/useDelayedHook";
 import { getUsers, getUser ,getUserByRoles   } from "../queries/userQuery";
-import { useTimeout } from 'usehooks-ts'
+import { useDebouncedState } from 'usehooks-ts';
 import { BsSearch } from "react-icons/bs";
 import UserDisplay from "../helperComponents/userDisplay";
 import '../styles/button.css'
@@ -11,7 +11,7 @@ const User = () => {
   const [value, setValue] = useState('initital state');
   const [counter , setCounter] = useState(0);
   const [delayValue , setDelayValue] = useState(3000)
-  const [delayState, setDelayState] = useDelayedState(0, delayValue);
+  const [delayState, setDelayState] = useDebouncedState(0, delayValue);
   const [emailValue, setEmailValue] = useState("anas.raza+1@merch.com");
   const delayMs = 1000
 
@@ -74,12 +74,10 @@ useEffect(() => {
 
 
 
-  const setDelayedValue = useTimeout(() => {
-    setValue(value)
-  }, delayMs)
+
 
   const handleSearch = (event) => {
-    setDelayedValue()
+    setDelayState(value)
 };
 
   const displayUsers = (loading, data) => {
