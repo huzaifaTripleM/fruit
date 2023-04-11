@@ -5,7 +5,7 @@ function useDelayedState(defaultValue, delayMs) {
   
   useEffect(()=>{
     console.log('HQ', defaultValue,delayMs)
-  })
+  },[])
 
   const delayedSetState = (newValue) => {
     setTimeout(() => {

@@ -10,7 +10,7 @@ import '../styles/button.css'
 const User = () => {
   const [value, setValue] = useState();
   const [counter , setCounter] = useState(0);
-  const [delayState, setDelayState] = useDelayedState(0, 1000);
+  const [delayState, setDelayState] = useDelayedState(0, 5000);
   const [emailValue, setEmailValue] = useState("anas.raza+1@merch.com");
 
    const [selectedOption, setSelectedOption] = useState('client');
@@ -57,6 +57,7 @@ useEffect(() => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    setDelayState (event.target.value)
     setCounter(0)
   };
 
@@ -65,9 +66,8 @@ useEffect(() => {
   };
 
   const handleSearch = (event) => {
-    // setDelayTime(5000)
-    // setDelayedValue('Testing2')
-    setDelayState ('Testing456' ,3000)
+    // event.preventDefault()
+    setDelayState ('Testing456' , 5000)
   };
 
   const displayUsers = (loading, data) => {
