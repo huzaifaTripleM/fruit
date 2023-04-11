@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState } from 'react'
+import { useTimeout } from 'usehooks-ts'
 
-function useDelayedState(defaultValue, delayMs) {
-  const [state, setState] = useState(defaultValue);
-  
-  useEffect(()=>{
-    console.log('HQ', defaultValue,delayMs)
-  },[])
+export default function useDelayedState(defaultValue, delayMs) {
+  const [state, setState] = useState(defaultValue)
 
-  const delayedSetState = (newValue) => {
-    setTimeout(() => {
-      setState(newValue);
-    }, delayMs);
-  };
+  useTimeout(() => {
+    setState(newValue => newValue === state ? newValue : state)
+  }, delayMs)
 
-  return [state, delayedSetState];
+  function setDelayedState(newValue) {
+    setState(newValue)
+  }
+
+  return [state, setDelayedState]
 }
 
-export default useDelayedState

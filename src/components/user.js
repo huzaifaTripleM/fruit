@@ -2,16 +2,19 @@ import React, { useEffect, useState , } from "react";
 import { useQuery} from "@apollo/client";
 import useDelayedState from "../lib/useDelayedHook";
 import { getUsers, getUser ,getUserByRoles   } from "../queries/userQuery";
-
+import { useTimeout } from 'usehooks-ts'
 import { BsSearch } from "react-icons/bs";
 import UserDisplay from "../helperComponents/userDisplay";
 import '../styles/button.css'
 
 const User = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('initital state');
   const [counter , setCounter] = useState(0);
-  const [delayState, setDelayState] = useDelayedState(0, 5000);
+  const [delayValue , setDelayValue] = useState(3000)
+  const [delayState, setDelayState] = useDelayedState(0, delayValue);
   const [emailValue, setEmailValue] = useState("anas.raza+1@merch.com");
+  const delayMs = 1000
+
 
    const [selectedOption, setSelectedOption] = useState('client');
   const { loading:loadingUsers, data:dataUsers } = useQuery(getUsers);
@@ -27,7 +30,6 @@ const User = () => {
     setSelectedOption(event.target.value);
   };
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prevCounter) => prevCounter + 1);
@@ -37,8 +39,12 @@ const User = () => {
 
 
 
+  function setDelayedState(newValue) {
+    setValue(newValue)
+  }
 
- 
+
+
 useEffect(() => {
   console.log('delayedCounter', delayState);
 },[delayState]);
@@ -56,8 +62,9 @@ useEffect(() => {
   const [isDisplay, setIsDisplay] = useState(false);
 
   const handleChange = (event) => {
+    event.preventDefault()
     setValue(event.target.value);
-    setDelayState (event.target.value)
+    setDelayValue(5000)
     setCounter(0)
   };
 
@@ -65,10 +72,15 @@ useEffect(() => {
     setIsDisplay(!isDisplay);
   };
 
+
+
+  const setDelayedValue = useTimeout(() => {
+    setValue(value)
+  }, delayMs)
+
   const handleSearch = (event) => {
-    // event.preventDefault()
-    setDelayState ('Testing456' , 5000)
-  };
+    setDelayedValue()
+};
 
   const displayUsers = (loading, data) => {
     if (loading) return <div>Data is loading ... </div>;
